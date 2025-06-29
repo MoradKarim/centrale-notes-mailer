@@ -1,0 +1,157 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Centrale Casablanca - Envoi des Notes</title>
+    <style>
+        :root {
+            --vert: #009878;
+            --bleu-fonce: #003366;
+        }
+
+        body {
+            margin: 0;
+            font-family: 'Segoe UI', sans-serif;
+            background-image: url("/background.png"); /* Ton image de fond */
+            background-size: cover;
+            background-position: center;
+            background-repeat: no-repeat;
+            background-attachment: fixed;
+            color: #fff;
+        }
+
+        header, main, footer {
+            background-color: rgba(0, 0, 0, 0.6); /* Semi-transparent */
+            margin: 20px;
+            padding: 20px;
+            border-radius: 10px;
+        }
+
+        header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+
+        header img {
+            height: 60px;
+        }
+
+        header h1 {
+            font-size: 1.5em;
+            margin: 0;
+        }
+
+        main {
+            max-width: 600px;
+            margin: 40px auto;
+        }
+
+        h2 {
+            text-align: center;
+            color: #ffffff;
+        }
+
+        label {
+            display: block;
+            margin-top: 20px;
+            font-weight: bold;
+        }
+
+        input[type="file"] {
+            width: 100%;
+            padding: 10px;
+            margin-top: 5px;
+            border-radius: 6px;
+            border: none;
+        }
+
+        button {
+            width: 100%;
+            margin-top: 30px;
+            background-color: var(--vert);
+            color: white;
+            border: none;
+            padding: 12px;
+            border-radius: 6px;
+            font-size: 16px;
+            cursor: pointer;
+        }
+
+        button:hover {
+            background-color: #007f68;
+        }
+
+        #resultat {
+            margin-top: 30px;
+            text-align: center;
+            font-weight: bold;
+            color: #fff;
+        }
+
+        footer {
+            text-align: center;
+            font-size: 14px;
+            color: #ccc;
+        }
+        footer {
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    background-color: rgba(0, 0, 0, 0.6); /* semi-transparent */
+    text-align: center;
+    font-size: 14px;
+    color: #ccc;
+    padding: 10px 0;
+}
+
+    </style>
+</head>
+<body>
+
+    
+
+    <main>
+        <h2>Portail de diffusion des notes</h2>
+        <form id="noteForm" enctype="multipart/form-data">
+            <label for="fichier">Fichier Excel :</label>
+            <input type="file" id="fichier" name="fichier" accept=".xlsx" required>
+
+            <button type="submit">Envoyer les mails</button>
+        </form>
+
+        <div id="resultat"></div>
+    </main>
+
+    <footer>
+
+
+
+        © Centrale Casablanca 2025 — Tous droits réservés
+    </footer>
+
+    <script>
+        document.getElementById("noteForm").addEventListener("submit", async function(event) {
+            event.preventDefault();
+
+            const formData = new FormData(document.getElementById("noteForm"));
+            document.getElementById("resultat").innerText = "📨 Envoi en cours...";
+
+            try {
+                const response = await fetch("/send-mails", {
+                    method: "POST",
+                    body: formData
+                });
+
+                const data = await response.json();
+                document.getElementById("resultat").innerText = data.message || "✅ Envoi terminé.";
+            } catch (error) {
+                document.getElementById("resultat").innerText = "❌ Erreur lors de l'envoi.";
+            }
+        });
+    </script>
+
+</body>
+</html>
