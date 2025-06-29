@@ -9,8 +9,8 @@ import os
 app = Flask(__name__)
 
 # ✅ Identifiants fixes
-EMAIL_ADDRESS = "mradkarim004@gmail.com"
-EMAIL_PASSWORD = "qher tcnu fgdo mgir"
+EMAIL_ADDRESS = "your email"
+EMAIL_PASSWORD = "your passeword"
 
 # 🏠 Route principale (affiche l’interface)
 @app.route('/')
